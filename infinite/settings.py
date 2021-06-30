@@ -21,7 +21,11 @@ environ.Env.read_env()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+#CORS configuration
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://localhost:8000',
+)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -34,18 +38,26 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wiki',
+    'corsheaders', #new
+    'search_admin_autocomplete',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware', #new
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -65,15 +77,26 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+                'django.template.context_processors.csrf'],
         },
     },
 ]
 
+# TEMPLATE_DIRS = (
+#     os.path.join(SETTINGS_PATH, 'templates'),
+# )
+
 WSGI_APPLICATION = 'infinite.wsgi.application'
 
 
-ALLOWED_HOSTS = [ 'localhost', '147.182.133.14', 'www.infinity.rizalrazuwan.space', 'infinity.rizalrazuwan.space']
+ALLOWED_HOSTS = [ 
+    'localhost', 
+    '147.182.133.14', 
+    'www.infinity.rizalrazuwan.space', 
+    'infinity.rizalrazuwan.space',
+    '*',
+    '127.0.0.1',
+    ]
 
 
 # Database
@@ -112,6 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kuala_Lumpur'  #new
 
 USE_I18N = True
 
@@ -119,9 +143,32 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' #static storage
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# upload memory size
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+FILEBROWSER_DIRECTORY = ''
+DIRECTORY = ''
+
+GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = {
+    "wiki": {
+        "Article": ("id__iexact", "title__icontains",)
+    }
+}

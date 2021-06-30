@@ -1,2 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+*.pot
+*.pyc
+.pyc
+__pycache__
+media
+
+*.py[cod] 
+*$py.class 
 .env
-/static/
+static/
+

@@ -1,0 +1,9 @@
+#!/bin/zsh -xv
+
+function mke(){
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py runserver
+}
+
+mke
