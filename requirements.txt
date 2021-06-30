@@ -10,3 +10,11 @@ django-grappelli
 whitenoise
 django-cors-headers==3.7.0
 Pillow
+
+#debugging package
+django-extensions 
+ipython 
+sqlite-connector
+
+#fast form 
+django-crispy-forms

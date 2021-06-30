@@ -1,4 +1,7 @@
-#!/bin/zsh -xv
+#!/bin/zsh -xv 
+
+#     #!/bin/zsh -xv or #!/bin/bash 
+
 
 function mke(){
     python manage.py makemigrations
@@ -7,3 +10,7 @@ function mke(){
 }
 
 mke
+
+#notes 
+# python manage.py shell_plus --ipython
+

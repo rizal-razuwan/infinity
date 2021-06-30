@@ -5,9 +5,41 @@ from requests.adapters import HTTPAdapter
 
 from bs4 import BeautifulSoup as BSoup
 from django.shortcuts import redirect
-from wiki.models import Article
+from wiki.models import Article, Visitor
+from wiki.serializers import VisitorSerializer
 
+from rest_framework import serializers, viewsets
 # import re    #regex library
+
+from django.views.generic import ListView, CreateView, UpdateView
+from django.urls import reverse_lazy
+from wiki.forms import VisitorForm
+
+class VisitorListView(ListView):
+    model = Visitor
+    context_object_name = 'people'
+
+
+class VisitorCreateView(CreateView):
+    model = Visitor
+    fields = ('name', 'email', 'job_title', 'bio')
+    success_url = reverse_lazy('person_list')
+
+
+class VisitorUpdateView(UpdateView):
+    model = Visitor
+    form_class = VisitorForm
+    template_name = 'wiki/visitor_update_form.html'
+    success_url = reverse_lazy('person_list')
+
+
+
+class VisitorViewset(viewsets.ModelViewSet):
+    queryset = Visitor.objects.all()
+    model = Visitor
+    serializers = VisitorSerializer
+
+
 
 requests.packages.urllib3.disable_warnings()
 
@@ -44,10 +76,10 @@ def scrape(url):
 
 # scrape("https://en.wikipedia.org/wiki/Main_Page")
 
-def news_list(request):
-	headlines = Article.objects.all()[::-1]
-	# headlines = Article.objects.all()[0:100]
-	context = {
-		'object_list': headlines,
-	}
-	return render(request, "wiki/home.html", context)
+# def news_list(request):
+# 	headlines = Article.objects.all()[::-1]
+# 	# headlines = Article.objects.all()[0:100]
+# 	context = {
+# 		'object_list': headlines,
+# 	}
+# 	return render(request, "wiki/home.html", context)

@@ -46,9 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'wiki',
     'corsheaders', #new
     'search_admin_autocomplete',
+    'django_extensions', #debugging package
+    
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +61,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware', #new
-
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -172,3 +175,6 @@ GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = {
         "Article": ("id__iexact", "title__icontains",)
     }
 }
+
+#crispyform config
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
